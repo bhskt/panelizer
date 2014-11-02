@@ -2,7 +2,7 @@
 function panel($view,$data){
 	if(file_exists("view/panel/{$view}.php")){
 			ob_start();
-			require_once "view/panel/{$view}.php";
+			require "view/panel/{$view}.php";
 			$page=ob_get_clean();
 			foreach($data as $key=>$val){
 				$page=str_replace("%".$key."%",$val,$page);
