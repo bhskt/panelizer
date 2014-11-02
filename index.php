@@ -1,0 +1,30 @@
+<?php
+require_once "control/conf/conf.php";
+if($CONF["developer"]){
+	error_reporting(-1);
+	ini_set("display_startup_errors",1);
+	ini_set("display_errors",1);
+}
+else{
+	error_reporting(0);
+	ini_set("display_startup_errors",0);
+	ini_set("display_errors",0);
+}
+ob_start();
+session_name(md5((int)(time()/1800)));
+session_start();
+require_once "control/util.php";
+if(empty($_SERVER["QUERY_STRING"])){
+	send(1);
+}
+else{
+	$_GET=explode("/",$_SERVER["QUERY_STRING"]);
+	if($_GET[0]=="json"){
+		array_shift($_GET);
+		send(0,array_shift($_GET));
+	}
+	else{
+		send(1,array_shift($_GET));
+	}
+}
+?>
